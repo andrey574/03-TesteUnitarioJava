@@ -91,8 +91,13 @@ private void validarValorPositivo(double valor) {
      *   - O saldo deve ser zero para encerrar (lançar IllegalStateException se houver saldo).
      *   - A propriedade ativa deve ser alterada para false.
      */
-    public void encerrar() {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+   public void encerrar() {
+    if (!ativa) {
+        throw new IllegalStateException("A conta já está inativa.");
     }
+    if (saldo != 0) {
+        throw new IllegalStateException("Só é possível encerrar conta com saldo zero.");
+    }
+    ativa = false;
+}
 }

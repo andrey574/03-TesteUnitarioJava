@@ -156,6 +156,33 @@ void sacar_ValorMaiorQueSaldo_LancaIllegalStateException() {
     assertThrows(IllegalStateException.class, () -> conta.sacar(101));
     assertEquals(100, conta.getSaldo(), 0.001);
 }
+
+@Test
+void encerrar_SaldoZero_DesativaConta() {
+    var conta = new Conta("Maria");
+
+    conta.encerrar();
+
+    assertFalse(conta.isAtiva());
+}
+
+@Test
+void encerrar_ContaComSaldo_LancaIllegalStateException() {
+    var conta = new Conta("Maria", 1);
+
+    assertThrows(IllegalStateException.class, () -> conta.encerrar());
+    assertTrue(conta.isAtiva());
+    assertEquals(1, conta.getSaldo(), 0.001);
+}
+
+@Test
+void encerrar_ContaJaInativa_LancaIllegalStateException() {
+    var conta = new Conta("Maria");
+    conta.encerrar();
+
+    assertThrows(IllegalStateException.class, () -> conta.encerrar());
+    assertFalse(conta.isAtiva());
+}
     // =======================================================
     //  Testes para transferir
     //  Sugestão de testes:
