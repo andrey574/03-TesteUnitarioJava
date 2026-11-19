@@ -88,9 +88,15 @@ private void validarAtiva() {
      *   - O saldo de ambas as contas deve ser atualizado corretamente.
      */
     public void transferir(Conta destino, double valor) {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+    validarAtiva();
+    destino.validarAtiva();
+    validarValorPositivo(valor);
+    if (valor > saldo) {
+        throw new IllegalStateException("Saldo insuficiente.");
     }
+    saldo -= valor;
+    destino.saldo += valor;
+}
 
     /**
      * Encerra a conta.
