@@ -53,11 +53,13 @@ public class Conta {
      *   - O saldo deve ser atualizado corretamente.
      */
     public void depositar(double valor) {
+    validarAtiva();
     validarValorPositivo(valor);
     saldo += valor;
 }
 
 public void sacar(double valor) {
+    validarAtiva();
     validarValorPositivo(valor);
     if (valor > saldo) {
         throw new IllegalStateException("Saldo insuficiente.");
@@ -68,6 +70,12 @@ public void sacar(double valor) {
 private void validarValorPositivo(double valor) {
     if (valor <= 0) {
         throw new IllegalArgumentException("O valor deve ser maior que zero.");
+    }
+}
+
+private void validarAtiva() {
+    if (!ativa) {
+        throw new IllegalStateException("A conta está inativa.");
     }
 }
 
