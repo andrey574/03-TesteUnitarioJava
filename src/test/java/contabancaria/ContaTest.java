@@ -93,7 +93,15 @@ class ContaTest {
     //  Testes para depositar
     //  Sugestão de testes:
     //    - Depósito com valor válido atualiza o saldo
+    //
     //    - Depósito com valor zero lança IllegalArgumentException
+    @Test
+void depositar_ValorZero_LancaIllegalArgumentException() {
+    var conta = new Conta("Maria", 100);
+
+    assertThrows(IllegalArgumentException.class, () -> conta.depositar(0));
+    assertEquals(100, conta.getSaldo(), 0.001);
+}
     //    - Depósito com valor negativo lança IllegalArgumentException
     //    - Depósito em conta inativa lança IllegalStateException
     // =======================================================
