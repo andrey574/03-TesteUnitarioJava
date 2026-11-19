@@ -53,28 +53,22 @@ public class Conta {
      *   - O saldo deve ser atualizado corretamente.
      */
     public void depositar(double valor) {
-    if (valor <= 0) {
-        throw new IllegalArgumentException("O valor do depósito deve ser maior que zero.");
-    }
+    validarValorPositivo(valor);
     saldo += valor;
 }
 
-    /**
-     * Saca um valor da conta.
-     * Regras:
-     *   - Valor deve ser maior que zero (lançar IllegalArgumentException).
-     *   - Conta deve estar ativa (lançar IllegalStateException).
-     *   - Não pode sacar mais do que o saldo (lançar IllegalStateException).
-     *   - O saldo deve ser atualizado corretamente.
-     */
-    public void sacar(double valor) {
-    if (valor <= 0) {
-        throw new IllegalArgumentException("O valor do saque deve ser maior que zero.");
-    }
+public void sacar(double valor) {
+    validarValorPositivo(valor);
     if (valor > saldo) {
         throw new IllegalStateException("Saldo insuficiente.");
     }
     saldo -= valor;
+}
+
+private void validarValorPositivo(double valor) {
+    if (valor <= 0) {
+        throw new IllegalArgumentException("O valor deve ser maior que zero.");
+    }
 }
 
     /**
