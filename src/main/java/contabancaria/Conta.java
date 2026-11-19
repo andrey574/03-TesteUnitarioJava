@@ -53,10 +53,9 @@ public class Conta {
      *   - O saldo deve ser atualizado corretamente.
      */
     public void depositar(double valor) {
-    saldo += valor;
     if (valor <= 0) {
-    throw new IllegalArgumentException("O valor do depósito deve ser maior que zero.");
-}
+        throw new IllegalArgumentException("O valor do depósito deve ser maior que zero.");
+    }
     saldo += valor;
 }
 
@@ -69,9 +68,14 @@ public class Conta {
      *   - O saldo deve ser atualizado corretamente.
      */
     public void sacar(double valor) {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+    if (valor <= 0) {
+        throw new IllegalArgumentException("O valor do saque deve ser maior que zero.");
     }
+    if (valor > saldo) {
+        throw new IllegalStateException("Saldo insuficiente.");
+    }
+    saldo -= valor;
+}
 
     /**
      * Transfere valor desta conta para outra.

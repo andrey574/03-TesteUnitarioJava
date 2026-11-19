@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import  org.junit.jupiter.params.provider.ValueSource;
+
+
 /**
  * Testes unitários para a classe Conta.
  *
@@ -102,7 +106,7 @@ void depositar_ValorZero_LancaIllegalArgumentException() {
     assertThrows(IllegalArgumentException.class, () -> conta.depositar(0));
     assertEquals(100, conta.getSaldo(), 0.001);
 }
-    //    - Depósito com valor negativo lança IllegalArgumentException
+    //    - Depósito com valor negativo lança IllegalArgumentException   
     //    - Depósito em conta inativa lança IllegalStateException
     // =======================================================
 
@@ -116,8 +120,42 @@ void depositar_ValorZero_LancaIllegalArgumentException() {
     //    - Saque com valor negativo lança IllegalArgumentException
     //    - Saque em conta inativa lança IllegalStateException
     // =======================================================
+@Test
+void depositar_ValorNegativo_LancaIllegalArgumentException() {
 
+    var conta = new Conta("Maria", 100);
+ 
+    assertThrows(IllegalArgumentException.class, () -> conta.depositar(-10));
 
+    assertEquals(100, conta.getSaldo(), 0.001);
+
+}
+
+@Test
+void sacar_ValorValido_AtualizaSaldo() {
+    var conta = new Conta("Maria", 100);
+
+    conta.sacar(40);
+
+    assertEquals(60, conta.getSaldo(), 0.001);
+}
+
+@ParameterizedTest
+@ValueSource(doubles = {0, -10})
+void sacar_ValorZeroOuNegativo_LancaIllegalArgumentException(double valor) {
+    var conta = new Conta("Maria", 100);
+
+    assertThrows(IllegalArgumentException.class, () -> conta.sacar(valor));
+    assertEquals(100, conta.getSaldo(), 0.001);
+}
+
+@Test
+void sacar_ValorMaiorQueSaldo_LancaIllegalStateException() {
+    var conta = new Conta("Maria", 100);
+
+    assertThrows(IllegalStateException.class, () -> conta.sacar(101));
+    assertEquals(100, conta.getSaldo(), 0.001);
+}
     // =======================================================
     //  Testes para transferir
     //  Sugestão de testes:
